@@ -1,7 +1,8 @@
 const {useState} = React
 const {render} = ReactDOM
 
-const User = props => {
+const 
+User = props => {
     return (
         <>
             <p className='text-warning fw-bolder'>{`${(props.sex === 'men' ? 'Mr' : 'Ms')} ${props.name} has reached a level of ${props.skillLevel}% in french.`}</p>
@@ -14,20 +15,24 @@ const User = props => {
 App = () => {
     const 
     [data, setData] = useState({name: 'pending..', sex: 'unknown', skillLevel: 'unknown'}),
-    handleTextInput = ({target})=> setData( prevData => ({...prevData, name: target.value})), 
-    handleSexInput = ({target})=> setData( prevData => ({...prevData, sex: target.value})),
+    handleTextInput = ({target:{value}})=> setData( prevData => ({...prevData, name: value})), 
+    handleSexInput = ({target:{value}})=> setData( prevData => ({...prevData, sex: value})),
     handleSkilllevelInput = ({target: {value}})=> setData( prevData => ({...prevData, skillLevel: value < 0 ? 0 : value > 100? 100: value})) 
+
+    useEffect(()=> console.info('app just rendered for the first time bro!'),[])
 
     return(
         <>  
             <div className='form-container bg-dark my-3 py-5'>
-                <form className='bg-warning my-2 py-2'>
-                    <input type='text' className='bg-dark text-white fw-bolder mx-2' onChange={handleTextInput}/>
-                    <select className='bg-dark text-white fw-bolder mx-2' onChange={handleSexInput}>
-                        <option value='men'>men</option>
-                        <option value='women'>women</option>
-                    </select>
-                    <input type='number' min='0' max='100' step='5'className='bg-info text-white fw-bolder' onChange={handleSkilllevelInput}/>
+                <form className='bg-warning my-2 p-2'>
+                    <div className='row mx-2'>
+                        <input type='text' className='col col-sm-12 col-md-4 col-lg-3 bg-dark text-white fw-bolder mx-2' onChange={handleTextInput}/>
+                        <select className='col col-sm-6 col-md-2 col-lg-2 bg-dark text-white fw-bolder mx-2' onChange={handleSexInput}>
+                            <option value='men'>men</option>
+                            <option value='women'>women</option>
+                        </select>
+                        <input type='number' min='0' max='100' step='5'className='col col-sm-6 col-md-2 col-lg-2 bg-info text-white fw-bolder mx-2' onChange={handleSkilllevelInput}/>
+                    </div>
                 </form>
             </div>
             <div className='user-container'>
